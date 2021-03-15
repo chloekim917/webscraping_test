@@ -1,5 +1,7 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
+from flask import Flask, jsonify
+from flask_cors import CORS
 import re
 
 driver = webdriver.Chrome()
@@ -12,7 +14,6 @@ html =  BeautifulSoup(driver.page_source, "html.parser")
 for item in html:
     actual_text=item.text
 
-# print(len(actual_text))
 driver.close() 
 
 def freq(actual_text): 
@@ -26,8 +27,11 @@ def freq(actual_text):
     # gives set of unique words 
     unique_words = set(str_list) 
       
+    arr = []
     for words in unique_words : 
         print(words,':', str_list.count(words)) 
+        arr.append(words + ': ' + str(str_list.count(words)))
+    return arr
   
 # driver code 
 if __name__ == "__main__": 
@@ -35,5 +39,14 @@ if __name__ == "__main__":
     # calling the freq function 
     freq(actual_text) 
 
+app = Flask(__name__)
+CORS(app)
+@app.route('/', methods=['GET'])
+def get_wordcount():
+    return jsonify({'words': freq(actual_text)})
+
+@app.route('/', methods-['POST'])
+def post_url():
+    
 
 
