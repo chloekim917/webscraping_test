@@ -41,11 +41,20 @@
 
 
 from selenium import webdriver
-# from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup
 
 driver = webdriver.Chrome()
 
 url = 'http://textfiles.com/stories/alissadl.txt'
 driver.get(url)
 
-print(driver.page_source)
+html =  BeautifulSoup(driver.page_source, "html.parser")
+
+for item in html:
+    actual_text=item.text
+
+print(len(actual_text))
+
+
+
+
