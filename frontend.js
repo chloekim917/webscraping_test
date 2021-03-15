@@ -20,3 +20,12 @@ function renderWordsCount(wordsCount){
           <li>${word}</li>`
     });
 }
+
+// function inputUrl(){
+//     document.addEventListener('submit', (e)=>{
+//         e.preventDefault()
+//         if(e.target.className === 'url-button'){
+
+//         }
+//     })
+// }

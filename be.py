@@ -1,6 +1,6 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request, redirect
 from flask_cors import CORS
 import re
 
@@ -17,17 +17,18 @@ for item in html:
 driver.close() 
 
 def freq(actual_text): 
-  
-    #eliminate special characters except
+    #eliminate special characters
     new_string = re.sub(r'[^a-zA-Z0-9 ]','',actual_text)
     # break the string into list of words
     str_list = new_string.casefold().split()
 
   
-    # gives set of unique words 
+    # set of unique words 
     unique_words = set(str_list) 
       
     arr = []
+
+    #words count string and array creation
     for words in unique_words : 
         print(words,':', str_list.count(words)) 
         arr.append(words + ': ' + str(str_list.count(words)))
@@ -39,14 +40,23 @@ if __name__ == "__main__":
     # calling the freq function 
     freq(actual_text) 
 
+#json
 app = Flask(__name__)
 CORS(app)
 @app.route('/', methods=['GET'])
 def get_wordcount():
     return jsonify({'words': freq(actual_text)})
 
-@app.route('/', methods-['POST'])
-def post_url():
+
+
+#url POST attempts
+
+# @app.route('/', methods-['POST'])
+# def post_url():
     
+# @app.route('/', methods = ['POST'])
+# def url():
+#     form_data = request.form
+#     return render_template(form_data = form_data)
 
 
